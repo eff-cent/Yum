@@ -23,32 +23,7 @@
 <h2>Registrar repartidor</h2>
 
 
-
-<form action="modificadorRepartidor?action=register" method="post">
-
-
-  <div class="form-group">
-    <label for="nombre">Nombre</label>
-    <input type="text" class="form-control" name="nombre" id="nombreRepartidor" placeholder="Escribe el/los nombres del repartidor">
-  </div>
-  <div class="form-group">
-    <label for="apellidoPaterno">Apellido paterno</label>
-    <input type="text" class="form-control" name="apellidoPaterno" id="apellidoPaterno" placeholder="Escribe el apellido paterno del repartidor">
-  </div>
-  
-  <div class="form-group">
-    <label for="apellidoMaterno">Apellido materno</label>
-    <input type="text" class="form-control" name="apellidoMaterno" id="apellidoMaterno" placeholder="Escribe el apellido materno del repartidor">
-  </div>
-  
-  <div class="form-group">
-    <label for="email">Correo electrónico</label>
-    <input type="text" class="form-control" name="correoElectronico" id="correoElectronico" placeholder="Escribe el correo electrónico del repartidor">
-  </div>
-  
-
-  
-  <button type="submit" class="btn btn-primary" name = "agregar" >Registrar Repartidor</button>
-</form>
+<a class = "btn btn-primary" href="modificadorRepartidor?action=registrarRepartidor">Registrar Articulos</a>
+<a class = "btn btn-primary" href="modificadorRepartidor?action=mostrar">Mostrar Articulos</a>
 </body>
 </html>

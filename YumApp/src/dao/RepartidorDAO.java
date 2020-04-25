@@ -17,7 +17,6 @@ public class RepartidorDAO {
 	private Connection connection;
 
 	public RepartidorDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) throws SQLException {
-		System.out.println(jdbcURL);
 		con = new ConexionBD(jdbcURL, jdbcUsername, jdbcPassword);
 	}
 	
@@ -71,6 +70,90 @@ public class RepartidorDAO {
 		
 		return rowInserted;
 	}
+	
+	// listar todos los repartidores
+	//hay que hacer un join para mostrar a los repartidores con las personas
+	
+	public List<Repartidor> listarRepartidores() throws SQLException {
+		System.out.println("Estoy en listar repartidores");
+		List<Repartidor> listaRepartidor = new ArrayList<Repartidor>();
+		String sql = "SELECT persona.idPersona ,persona.nombre, persona.apellidoPaterno, persona.apellidoMaterno, persona.correoElectronico FROM persona INNER JOIN repartidor ON persona.idPersona = repartidor.idRepartidor";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		Statement statement = connection.createStatement();
+		ResultSet resulSet = statement.executeQuery(sql);
+
+		while (resulSet.next()) {
+			int idPersona = resulSet.getInt("idPersona");
+			String nombre = resulSet.getString("nombre");
+			String apellidoPaterno = resulSet.getString("apellidoPaterno");
+			String apellidoMaterno = resulSet.getString("apellidoMaterno");
+			String correoElectronico = resulSet.getString("correoElectronico");
+		
+			Repartidor repartidor = new Repartidor(nombre, apellidoPaterno,  apellidoMaterno,  correoElectronico);
+			repartidor.setIdPersona(idPersona);
+			repartidor.setIdRepartidor(idPersona);
+			listaRepartidor.add(repartidor);
+			
+		}
+		con.desconectar();
+		return listaRepartidor;
+	}
+	
+	public Repartidor obtenerPorId(int id) throws SQLException {
+		System.out.println("obtenerporid");
+		Repartidor repartidor = new Repartidor();
+
+		String sql = "SELECT * FROM Persona WHERE idPersona = " + id;
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		
+		Statement statement = connection.createStatement();
+		ResultSet res = statement.executeQuery(sql);
+		if (res.next()) {
+			int idPersona = res.getInt("idPersona");
+		
+			repartidor = new Repartidor(res.getString("nombre"), res.getString("apellidoPaterno"), res.getString("apellidoMaterno"),res.getString("correoElectronico"));
+			repartidor.setIdPersona(idPersona);
+			repartidor.setIdRepartidor(idPersona);
+		}
+			
+		res.close();
+		con.desconectar();
+		
+		return repartidor;
+	}
+	
+	public boolean actualizar(Repartidor repartidor) throws SQLException {
+		
+		System.out.println("actualizar(Repartidor repartidor)");
+		
+		boolean rowActualizar = false;
+		String sql = "UPDATE persona SET nombre=?,apellidoPaterno=?,apellidoMaterno=?,correoElectronico=? WHERE idPersona = ?";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		PreparedStatement statement = connection.prepareStatement(sql);
+	
+		statement.setString(1, repartidor.getNombre());
+		statement.setString(2, repartidor.getApellidoPaterno());
+		statement.setString(3, repartidor.getApellidoMaterno());
+		statement.setString(4, repartidor.getCorreoElectronico());
+		statement.setDouble(5, repartidor.getIdPersona());
+
+		rowActualizar = statement.executeUpdate() > 0;
+		if (rowActualizar == false) {
+			 throw new SQLException("Persona no creado, no rows affected.");
+	    }else {
+	    	System.out.println("Persona creada");
+	    }
+		
+		statement.close();
+		con.desconectar();
+		return rowActualizar;
+	}
+
 
 
 }

@@ -34,4 +34,11 @@ public class Repartidor extends Persona {
 	public void setIdRepartidor(int idRepartidor) {
 		this.idRepartidor = idRepartidor;
 	}
+	
+	public String toString() {
+		String string = "-------------------------------------------------------------------------\n";
+		string += "| " + this.getIdPersona() + "| " + this.getNombre() +"| " +  this.getApellidoPaterno() +"| " + this.getApellidoMaterno() +"| " + this.getCorreoElectronico() +"| " + idRepartidor+"|\n "  ;
+		 string += "-------------------------------------------------------------------------\n";
+		return string;
+	}
 }
