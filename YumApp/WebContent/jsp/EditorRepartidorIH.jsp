@@ -19,17 +19,17 @@
 
 
 <!-- Style CSS para lo demás -->
-	   	<link rel="stylesheet" type="text/css" href="../CSS/style.css">
+	   	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css">
 	 
 	
 		<!-- Icono del título de la página -->
-        <img src = "/Icons/admin-icon.svg" />
+        <img src = "${pageContext.request.contextPath}/Icons/admin-icon.svg" />
 </head>
 
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark" id="top-bar">
 			<div class="navbar-brand">
-				<img src="../Icons/admin.svg" width="40" height="40" class="" alt="">
+				<img src="${pageContext.request.contextPath}/Icons/admin.svg" width="40" height="40" class="" alt="">
   				<a class="navbar-brand text-white">Administración Yum</a>
 			</div>
   			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -42,7 +42,7 @@
 		  </div>
 				<div class="navbar-brand" id="cerrar-sesion">
 					<a class="nav-item" href="#">Cerrar Sesión</a>
-					<img src="../Icons/cerrar-sesion.svg" width="40" height="40" class="ml-3" alt="">
+					<img src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg" width="40" height="40" class="ml-3" alt="">
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="	Toggle navigation">
   					<span class="navbar-toggler-icon"></span>
   					</button>
@@ -51,13 +51,13 @@
 
 		<h1 class="text-center">Editar Repartidor</h1>
 		
-		 <p> Edita los datos de un artículo </p>
+		
   </div>
 
 	
 	<form action="modificadorRepartidor?action=editar" method="post" >
 
-		<div class = "form-group">
+		<div class = "form-group ">
 			<label for = "nombre">Nombre</label>
 			<input type="text" class="form-control"  id = "nombre" name="nombre" value="${repartidor.nombre}" >
 		</div>
@@ -80,11 +80,13 @@
 	
 		<input id=idPersona name="idPersona" type = "hidden" value="${repartidor.idPersona}">
 
-			<div class = text-center>
-			<div class = "col-md-4r">
+			<div class = "text-center">
 			<button type="submit"  name = "registrar" class="btn btn-primary">Guardar</button>
 			</div>
+			<div class = "text-right">
+				
 			</div>
+			
 	</form>
 		
 		

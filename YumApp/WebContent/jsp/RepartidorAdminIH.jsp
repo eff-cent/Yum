@@ -8,17 +8,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">	
 		
 		<!-- Style CSS para lo demás -->
-	   	<link rel="stylesheet" type="text/css" href="../CSS/style.css">
+	   	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css">
 	   	
 	   	<!-- Style CSS Bootstrap -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		
-		<title>Mostrar repartidores</title>
+		<title>Repartidores</title>
 	
 		<!-- Icono del título de la página -->
-        <img src = "/Icons/admin-icon.svg" />
+        <img src = "${pageContext.request.contextPath}/Icons/admin-icon.svg" />
 	
 	</head>
 
@@ -34,7 +34,7 @@
   
 		<nav class="navbar navbar-expand-lg navbar-dark" id="top-bar">
 			<div class="navbar-brand">
-				<img src="../Icons/admin.svg" width="40" height="40" class="" alt="">
+				<img src="${pageContext.request.contextPath}/Icons/admin.svg" width="40" height="40" class="" alt="">
   				<a class="navbar-brand text-white">Administración Yum</a>
 			</div>
   			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -47,27 +47,24 @@
 		  </div>
 				<div class="navbar-brand" id="cerrar-sesion">
 					<a class="nav-item" href="#">Cerrar Sesión</a>
-					<img src="../Icons/cerrar-sesion.svg" width="40" height="40" class="ml-3" alt="">
+					<img src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg" width="40" height="40" class="ml-3" alt="">
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="	Toggle navigation">
   					<span class="navbar-toggler-icon"></span>
   					</button>
   				</div>
 		</nav>
 		
-		<h1 class="display-4 text-center" >Mostrar Repartidores</h1>
-  		<p> Muestra todos los repartidores </p>
+		<h1 class="display-4 text-center" >Repartidores</h1>
+  		
 	
 	
 		<div class="container py-2 min-vw-50">
 				
 				<div class="row py-1 justify-content-center" id="menu-CRUD">
-					<div class="col-">
-						<img src="../Icons/editar.svg" width="30" height="30" class="ml-3" alt="">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Editar</button>
-					</div>
+				
 					
 					<div class="col-">
-						<img src="../Icons/anadir.svg" width="30" height="30" class="ml-3" alt="">
+						<img src="${pageContext.request.contextPath}/Icons/anadir.svg" width="30" height="30" class="ml-3" alt="">
 						<a class = "btn btn-primary" href="modificadorRepartidor?action=registrarRepartidor">Registrar nuevo Repartidor</a>
 					</div>
 				</div>
@@ -80,20 +77,49 @@
 		<th  class="text-center" scope = "col" >Apellido Paterno</th>
 		 <th  class="text-center" scope = "col" >Apellido Materno</th>
 		 <th  class="text-center" scope = "col" >Correo electrónico</th>
-		 <th class="text-center" scope = "col"> editar </th>
+		 <th class="text-center" scope = "col"/>
 		 
 		</tr>
 		</thead>
+	
 		<tbody>
+	
 		<c:forEach var="repartidor" items="${lista}">
+		<tr>
 				<td><c:out value="${repartidor.nombre}"/></td>
 				<td><c:out value="${repartidor.apellidoPaterno}"/></td>
 				<td><c:out value="${repartidor.apellidoMaterno}"/></td>
 				<td><c:out value="${repartidor.correoElectronico}"/></td>
-				<td><a class = "btn btn-primary" href="modificadorRepartidor?action=showedit&idPersona=<c:out value="${repartidor.idPersona}" />">Editar</a></td>
+				<td>
+				<div class="col-2">
+				<a class = "btn btn-primary" href="modificadorRepartidor?action=showedit&idPersona=<c:out value="${repartidor.idPersona}" />">Editar</a>
+				<img src="${pageContext.request.contextPath}/Icons/editar.svg" width="30" height="30" class="ml-3" alt="">
+				<button type="button" class="btn btn-danger " data-toggle="modal" data-target="#modalBorrar">Eliminar</button>
+					<img src="${pageContext.request.contextPath}/Icons/borrar.svg" width="30" height="30" class="ml-3" alt="">
+<!-- Modal -->
+<div id="modalBorrar" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Borrar repartidor </h4>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de que quieres eliminar al repartidor <b> ${repartidor.nombre} ${repartidor.apellidoPaterno} ${repartidor.apellidoMaterno }</b>? No podrás recuperar sus datos.</p>
+      </div>
+      <div class = "modal-footer">
+      	<a class = "btn btn-danger" href="modificadorRepartidor?action=eliminar&idPersona=<c:out value="${repartidor.idPersona}" />">Borrar</a>
+     <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+  </div>
+</div>
+				
+				
+				</div>
+				</td>
 				
 			</tr>
-		</c:forEach>s
+		</c:forEach>
 		</tbody>
 	</table>
 	

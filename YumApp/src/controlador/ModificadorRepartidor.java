@@ -80,7 +80,7 @@ public class ModificadorRepartidor extends HttpServlet {
 				editar(request, response);
 				break;
 			case "eliminar":
-				//eliminar(request, response);
+				eliminar(request, response);
 				break;
 			default:
 				break;
@@ -152,6 +152,14 @@ public class ModificadorRepartidor extends HttpServlet {
 			repartidor.setIdPersona(idPersona);
 			repartidorDAO.actualizar(repartidor);
 			mostrar(request, response);
+		}
+		
+		private void eliminar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+			Repartidor repartidor = repartidorDAO.obtenerPorId(Integer.parseInt(request.getParameter("idPersona")));
+			System.out.println(repartidor.toString());
+			repartidorDAO.eliminar(repartidor);
+			mostrar(request, response);
+			
 		}
 		
 		

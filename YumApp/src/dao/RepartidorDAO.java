@@ -153,6 +153,37 @@ public class RepartidorDAO {
 		con.desconectar();
 		return rowActualizar;
 	}
+	
+	public boolean eliminar(Repartidor repartidor) throws SQLException {
+		boolean rowEliminar = false;
+		String sqlRep = "DELETE FROM repartidor WHERE idPersona=?";
+		String sqlPer = "DELETE FROM persona WHERE idPersona=?";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		PreparedStatement statement = connection.prepareStatement(sqlRep);
+		statement.setInt(1, repartidor.getIdPersona());
+
+		rowEliminar = statement.executeUpdate() > 0;
+		if (rowEliminar == false) {
+			 throw new SQLException("Repartidor no eliminado, no rows affected.");
+	    }else {
+	    	System.out.println("Repartidor eliminado");
+	    }
+		statement = connection.prepareStatement(sqlPer);
+		statement.setInt(1, repartidor.getIdPersona());
+		
+		rowEliminar = statement.executeUpdate() > 0;
+		if (rowEliminar == false) {
+			 throw new SQLException("Persona no eliminado, no rows affected.");
+	    }else {
+	    	System.out.println("Persona eliminado");
+	    }
+		
+		statement.close();
+		con.desconectar();
+
+		return rowEliminar;
+	}
 
 
 
