@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -73,8 +74,7 @@ public class RepartidorDAO {
 		statement = connection.prepareStatement(sqlRepartidor, Statement.RETURN_GENERATED_KEYS);
 		
 		
-	
-		System.out.println(repartidor.toString());			
+		
 		statement.setInt(1, repartidor.getIdPersona());
 		rowInserted = statement.executeUpdate() > 0;
 		
@@ -87,8 +87,7 @@ public class RepartidorDAO {
 		try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 repartidor.setIdRepartidor(generatedKeys.getInt(1));
-                System.out.println(repartidor.toString());
-        		
+                
             }
             else {
                 throw new SQLException("No ID obtained.");
@@ -135,7 +134,7 @@ public class RepartidorDAO {
 		Repartidor repartidor = new Repartidor();
 
 		String sql = "SELECT * FROM Persona WHERE idPersona = " + id;
-		
+		String sqlRepa = "SELECT * FROM Repartidor WHERE idPersona = " +id;
 		con.conectar();
 		connection = con.getJdbcConnection();
 		
@@ -147,9 +146,17 @@ public class RepartidorDAO {
 			String password = res.getString("password");
 			repartidor = new Repartidor(res.getString("nombre"), res.getString("apellidoPaterno"), res.getString("apellidoMaterno"),res.getString("correoElectronico"));
 			repartidor.setIdPersona(idPersona);
-			repartidor.setIdRepartidor(idPersona);
+			
 			repartidor.setPassword(password);
 		}
+		
+		res = statement.executeQuery(sqlRepa);
+		if (res.next()) {
+			int idRepartidor = res.getInt("idRepartidor");
+			repartidor.setIdRepartidor(idRepartidor);
+			
+			
+		}	
 			
 		res.close();
 		con.desconectar();
@@ -157,20 +164,46 @@ public class RepartidorDAO {
 		return repartidor;
 	}
 	
-	/*public Boolean validarCorreoElectronico(String correo) throws SQLException{
-		String sql = "SELECT * FROM Persona WHERE correoElectronico = " + correo;
-
-		Statement statement = connection.createStatement();
-		ResultSet res = statement.executeQuery(sql);
-		if (res.next() == false) {
-			return false;
-		}
+	public Boolean validarCorreoElectronico(String correo) throws SQLException{
+		System.out.println("validar correo " + correo);
+		List<Repartidor> listaRepartidor = new ArrayList<Repartidor>();
+		
+		String sql = "SELECT * FROM persona INNER JOIN repartidor ON persona.idPersona = repartidor.idPersona AND persona.correoElectronico=?";
+		
+		
+		
+		con.conectar();
+		
+		connection = con.getJdbcConnection();
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, correo);
+		
+		
+		ResultSet resulSet = statement.executeQuery();
+		while (resulSet.next()) {
+			int idPersona = resulSet.getInt("idPersona");
+			int idRepartidor = resulSet.getInt("idRepartidor");
+			String nombre = resulSet.getString("nombre");
+			String apellidoPaterno = resulSet.getString("apellidoPaterno");
+			String apellidoMaterno = resulSet.getString("apellidoMaterno");
+			String correoElectronico = resulSet.getString("correoElectronico");
+			Repartidor repartidor = new Repartidor(nombre, apellidoPaterno,  apellidoMaterno,  correoElectronico);
+			repartidor.setIdPersona(idPersona);
+			repartidor.setIdRepartidor(idRepartidor);
+			listaRepartidor.add(repartidor);
 			
-		res.close();
+		}
+		statement.close();
 		con.desconectar();
-		return true;
-	}*/
-	
+		
+		LinkedHashSet<Repartidor> hashSet = new LinkedHashSet<>(listaRepartidor);
+		listaRepartidor.clear();
+        listaRepartidor = new ArrayList<Repartidor>(hashSet);
+        if(listaRepartidor.size()>1){
+        	return true;
+        }
+        return false;
+	}
 	public boolean actualizar(Repartidor repartidor) throws SQLException {
 		
 		System.out.println("actualizar(Repartidor repartidor)");
@@ -208,8 +241,9 @@ public class RepartidorDAO {
 		connection = con.getJdbcConnection();
 		PreparedStatement statement = connection.prepareStatement(sqlRep);
 		statement.setInt(1, repartidor.getIdRepartidor());
-
+		System.out.println(repartidor.toString());
 		rowEliminar = statement.executeUpdate() > 0;
+		System.out.println(rowEliminar);
 		if (rowEliminar == false) {
 			 throw new SQLException("Repartidor no eliminado, no rows affected.");
 	    }else {
@@ -273,6 +307,50 @@ public class RepartidorDAO {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+	}
+	
+	public List<Repartidor> buscarRepartidor(String datoRepartidor) throws SQLException {
+		
+		System.out.println("Estoy en buscar repartidores");
+		List<Repartidor> listaRepartidor = new ArrayList<Repartidor>();
+		String sql = "SELECT * FROM persona INNER JOIN repartidor ON persona.idPersona = repartidor.idPersona AND (persona.nombre=? or persona.apellidoPaterno=? or persona.apellidoMaterno=?)";
+		
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		PreparedStatement statement = connection.prepareStatement(sql);
+	
+		statement.setString(1, datoRepartidor);
+		statement.setString(2, datoRepartidor);
+		statement.setString(3, datoRepartidor);
+		
+		
+		ResultSet resulSet = statement.executeQuery();
+		while (resulSet.next()) {
+			int idPersona = resulSet.getInt("idPersona");
+			int idRepartidor = resulSet.getInt("idRepartidor");
+			String nombre = resulSet.getString("nombre");
+			String apellidoPaterno = resulSet.getString("apellidoPaterno");
+			String apellidoMaterno = resulSet.getString("apellidoMaterno");
+			String correoElectronico = resulSet.getString("correoElectronico");
+			Repartidor repartidor = new Repartidor(nombre, apellidoPaterno,  apellidoMaterno,  correoElectronico);
+			repartidor.setIdPersona(idPersona);
+			repartidor.setIdRepartidor(idRepartidor);
+			listaRepartidor.add(repartidor);
+			
+		}
+		statement.close();
+		con.desconectar();
+		
+		LinkedHashSet<Repartidor> hashSet = new LinkedHashSet<>(listaRepartidor);
+		listaRepartidor.clear();
+        listaRepartidor = new ArrayList<Repartidor>(hashSet);
+		return listaRepartidor;
+		
+		
+		
+		
+		
 	}
 
 

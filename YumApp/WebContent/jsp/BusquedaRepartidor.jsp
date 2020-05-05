@@ -17,8 +17,7 @@
 		
 		<title>Repartidores</title>
 	
-		<!-- Icono del título de la página -->
-     
+
 		
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -30,6 +29,10 @@
 	</head>
 
 	<body>
+		
+ 
+  
+		<!-- Barra de navegación -->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="top-bar">
 			<div class="navbar-brand">
 				<img src="${pageContext.request.contextPath}/Icons/admin.svg" width="40" height="40" class="" alt="">
@@ -40,7 +43,7 @@
 				      <a class="nav-item nav-link" href="#" >Órdenes</a>
 				      <a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
 				      <a class="nav-item nav-link" href="#" >Alimentos</a>
-				      <a class="nav-item nav-link" href="modificadorRepartidor?action=mostrar" id="nav-select">Repartidores</a>
+				      <a class="nav-item nav-link" href="modificadorRepartidores?action=mostrar" id="nav-select">Repartidores</a>
 			      </div>
 			</div>
 			<div class="navbar-brand" id="cerrar-sesion">
@@ -51,83 +54,95 @@
   				</button>
   			</div>
 		</nav>
-	
+		
 		<h1 class="display-4 text-center" >Repartidores</h1>
   		
-		
 	
-		<div class="container py-2 min-vw-50">		
-			<div class="row py-1 justify-content-center" id="menu-CRUD">
-				<div class="col-">
-					<img src="${pageContext.request.contextPath}/Icons/anadir.svg" width="30" height="30" class="ml-3" alt="">
-					<a class = "btn btn-primary" href="modificadorRepartidor?action=registrarRepartidor">Registrar nuevo Repartidor</a>
-				</div>
-				<div class="card">
+	
+		<div class="container py-2 min-vw-50">
+				
+				<div class="row py-1 justify-content-center" id="menu-CRUD">
+				
+					
 					<div class="col-">
-						<img class="icon" src="${pageContext.request.contextPath}/Icons/editar.svg"  class="ml-3l" alt="Editar" width="40" height="40">
-				    	<button  type="button" class="btn btn-primary" data-toggle="collapse" data-target="#buscar">Buscar Repartidor</button>
-			      	</div>
-			      	<div id="buscar"class="collapse">
-			      		<div class="card-body">
-			      			<form action ="modificadorRepartidor?action=buscar" method= "post" >
-	                			<div class="form-group">
-	                 				<input class="form-control" type="text" name="repartidorBuscado" id="repartidorBuscado" value="Nombre">
-	                		 	</div>
-	                		 	<button class="btn btn-outline-primary"  type="submit">Buscar</button>
-	            			</form>
-			      		</div>
-			      	</div>
+						<img src="${pageContext.request.contextPath}/Icons/anadir.svg" width="30" height="30" class="ml-3" alt="">
+						<a class = "btn btn-primary" href="modificadorRepartidor?action=mostrar">Registrar nuevo Repartidor</a>
+					</div>
 				</div>
 			</div>
-		</div>
 		<table class="table w-50 mx-auto table-striped table-bordered">
-		
-		<thead class="thead-dark">
-			<tr>
-				<th class="text-center" scope = "col" > Nombre</th>
-				<th  class="text-center" scope = "col" >Apellido Paterno</th>
-		 		<th  class="text-center" scope = "col" >Apellido Materno</th>
-		 		<th  class="text-center" scope = "col" >Correo electrónico</th>
-		 		<th  class="text-center" scope = "col" ></th>
+		 <thead class="thead-dark">
+		<tr>
 			
-			</tr>
+		  <th class="text-center" scope = "col" > Nombre</th>
+		<th  class="text-center" scope = "col" >Apellido Paterno</th>
+		 <th  class="text-center" scope = "col" >Apellido Materno</th>
+		 <th  class="text-center" scope = "col" >Correo electrónico</th>
+		 <th class="text-center" scope = "col"/>
+		 
+		</tr>
 		</thead>
 	
 		<tbody>
-			<c:forEach var="repartidor" items="${lista}">
-				<tr>
-					<td><c:out value="${repartidor.nombre}"/></td>
-					<td><c:out value="${repartidor.apellidoPaterno}"/></td>
-					<td><c:out value="${repartidor.apellidoMaterno}"/></td>
-					<td><c:out value="${repartidor.correoElectronico}"/></td>
-					<td>
-						<div class="col-2">
-							<a class = "btn btn-primary" href="modificadorRepartidor?action=showedit&idPersona=<c:out value="${repartidor.idPersona}" />">Editar</a>
-							<img src="${pageContext.request.contextPath}/Icons/editar.svg" width="30" height="30" class="ml-3" alt="">
-							<a class = "btn btn-danger" href="modificadorRepartidor?action=eliminar&idPersona=<c:out value="${repartidor.idPersona}" />">Borrar</a>
-							<img src="${pageContext.request.contextPath}/Icons/borrar.svg" width="30" height="30" class="ml-3" alt="">
-		
-						</div>
-					</td>
-				</tr>
-			</c:forEach>
+	
+		<c:forEach var="repartidor" items="${lista}">
+		<tr>
+				<td><c:out value="${repartidor.nombre}"/></td>
+				<td><c:out value="${repartidor.apellidoPaterno}"/></td>
+				<td><c:out value="${repartidor.apellidoMaterno}"/></td>
+				<td><c:out value="${repartidor.correoElectronico}"/></td>
+				<td>
+				<div class="col-2">
+				<a class = "btn btn-primary" href="modificadorRepartidor?action=showedit&idPersona=<c:out value="${repartidor.idPersona}" />">Editar</a>
+				<img src="${pageContext.request.contextPath}/Icons/editar.svg" width="30" height="30" class="ml-3" alt="">
+				<button type="button" class="btn btn-danger " data-toggle="modal" data-target="#modalBorrar">Eliminar</button>
+				<img src="${pageContext.request.contextPath}/Icons/borrar.svg" width="30" height="30" class="ml-3" alt="">
+<!-- Modal -->
+<div id="modalBorrar" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Borrar repartidor </h4>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de que quieres eliminar al repartidor <b> ${repartidor.nombre} ${repartidor.apellidoPaterno} ${repartidor.apellidoMaterno }</b>? No podrás recuperar sus datos.</p>
+      </div>
+      <div class = "modal-footer">
+      	<a class = "btn btn-danger" href="modificadorRepartidor?action=eliminar&idPersona=<c:out value="${repartidor.idPersona}" />">Borrar</a>
+     <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+  </div>
+</div>
+				
+				
+				</div>
+				</td>
+				
+			</tr>
+		</c:forEach>
 		</tbody>
 	</table>
 	
-	<!-- Footer -->
+	<div > 
+<a class = "btn btn-secondary" href="modificadorRepartidor?action=mostrar">Cancelar</a>
+</div>
+	
 	<footer class="page-footer font-small  pt-1 footer fixed-bottom">
+		
 		  <!-- Footer Elements -->
+		
 		  <!-- Copyright -->
 		  <div class="footer-copyright text-center py-2">2020 Copyright:
-		  	<a href="#"> 
-		  		Eff;cient organization
-		  		<img class="icon" src="${pageContext.request.contextPath}/Icons/Logo.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
+		    <a href="#"> 
+		  	  Eff;cient organization
+		  	  <img class="icon" src="${pageContext.request.contextPath}/Icons/Logo.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
 		    </a>
 		  </div>
 		  <!-- Copyright -->
-	</footer>
-		<!-- Footer -->
 		
+	</footer>
+	
 	 <!-- Optional JavaScript -->
 	    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

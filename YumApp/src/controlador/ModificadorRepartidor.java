@@ -82,6 +82,9 @@ public class ModificadorRepartidor extends HttpServlet {
 			case "eliminar":
 				eliminar(request, response);
 				break;
+			case "buscar":
+				buscarRepartidores(request, response);
+				break;
 			default:
 				break;
 			}			
@@ -107,23 +110,24 @@ public class ModificadorRepartidor extends HttpServlet {
 		}
 		
 		private void index (HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-			//mostrar(request, response);
 			RequestDispatcher dispatcher= request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}
 		
 		private void registrar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-		/*	Boolean existe = repartidorDAO.validarCorreoElectronico(request.getParameter("correoElectronico"));
-			request.setAttribute("checkResult", existe);
-			if(existe) {
-				
-			}else {*/
-				
+			Boolean existe = repartidorDAO.validarCorreoElectronico(request.getParameter("correoElectronico"));
+			System.out.println("existe es " + existe);
 			Repartidor repartidor = new Repartidor(request.getParameter("nombre"), request.getParameter("apellidoPaterno"), request.getParameter("apellidoMaterno"),request.getParameter("correoElectronico"));
 			repartidor.generarPassword();
-			repartidorDAO.insertar(repartidor);
+			
+			if(existe) {
+				showRegistroRepartidor(request,response);
+			}else {
+				repartidorDAO.insertar(repartidor);
+				mostrar(request,response);
+			}
 			//repartidorDAO.enviarRegistroRepartidor(repartidor); 
-		//	}
+		
 			
 		}
 		
@@ -133,11 +137,10 @@ public class ModificadorRepartidor extends HttpServlet {
 		}
 		
 		private void mostrar(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException , ServletException{
-			System.out.println("siis");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/RepartidorAdminIH.jsp");
 			List<Repartidor> repartidores= repartidorDAO.listarRepartidores();
 			request.setAttribute("lista", repartidores);
-			System.out.println("f"); 
+			
 			dispatcher.forward(request, response);
 		}	
 		
@@ -162,16 +165,7 @@ public class ModificadorRepartidor extends HttpServlet {
 			repartidor.setCorreoElectronico(request.getParameter("correoElectronico"));
 			repartidorDAO.actualizar(repartidor);
 			mostrar(request,response);
-			/*
-			Repartidor repartidor = new Repartidor(request.getParameter("nombre"), request.getParameter("apellidoPaterno"), request.getParameter("apellidoMaterno"), request.getParameter("correoElectronico"));
-			int idPersona = Integer.parseInt(request.getParameter("idPersona"));
-			String password = request.getParameter("password");
-			repartidor.setIdRepartidor(idPersona);
-			repartidor.setIdPersona(idPersona);
-			repartidor.setPassword(password);
-			System.out.println(repartidor.toString());
-			repartidorDAO.actualizar(repartidor);
-			mostrar(request, response);*/
+			
 		}
 		
 		private void eliminar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
@@ -182,6 +176,14 @@ public class ModificadorRepartidor extends HttpServlet {
 			
 		}
 		
+		private void buscarRepartidores(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/BusquedaRepartidor.jsp");
+			String repartidorBuscado = request.getParameter("repartidorBuscado");
+			List<Repartidor> repartidores = repartidorDAO.buscarRepartidor(repartidorBuscado);
+			request.setAttribute("lista", repartidores);
+			dispatcher.forward(request, response);
+			
+		}
 	
 		
 		

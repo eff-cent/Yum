@@ -23,30 +23,30 @@
 	 
 	
 		<!-- Icono del título de la página -->
-        <img src = "${pageContext.request.contextPath}/Icons/admin-icon.svg" />
+      
 </head>
 
 	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark" id="top-bar">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="top-bar">
 			<div class="navbar-brand">
 				<img src="${pageContext.request.contextPath}/Icons/admin.svg" width="40" height="40" class="" alt="">
   				<a class="navbar-brand text-white">Administración Yum</a>
 			</div>
-  			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-		    <div class="navbar-nav">
-		      <a class="nav-item nav-link" href="#">Alimentos</a>
-		      <a class="nav-item nav-link" href="#">Órdenes</a>
-		      <a class="nav-item nav-link" href="#">Menú</a>
-		      <a class="nav-item nav-link" href="#" id="nav-select"s>Repartidores</a>
-		    </div>
-		  </div>
-				<div class="navbar-brand" id="cerrar-sesion">
-					<a class="nav-item" href="#">Cerrar Sesión</a>
-					<img src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg" width="40" height="40" class="ml-3" alt="">
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="	Toggle navigation">
-  					<span class="navbar-toggler-icon"></span>
-  					</button>
-  				</div>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			    <div class="navbar-nav">
+				      <a class="nav-item nav-link" href="#" >Órdenes</a>
+				      <a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
+				      <a class="nav-item nav-link" href="#" >Alimentos</a>
+				      <a class="nav-item nav-link" href="modificadorRepartidor?action=mostrar" id="nav-select">Repartidores</a>
+			      </div>
+			</div>
+			<div class="navbar-brand" id="cerrar-sesion">
+				<a class="nav-item" href="#">Cerrar sesión</a>
+				<img src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg" width="30" height="40" class="ml-3" alt="">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="	Toggle navigation">
+  				<span class="navbar-toggler-icon"></span>
+  				</button>
+  			</div>
 		</nav>
 
 		<h1 class="text-center">Editar Repartidor</h1>
@@ -56,39 +56,46 @@
 
 	
 	<form action="modificadorRepartidor?action=editar" method="post" >
-
-		<div class = "form-group ">
-			<label for = "nombre">Nombre</label>
-			<input type="text" class="form-control"  id = "nombre" name="nombre" value="${repartidor.nombre}" >
-		</div>
-			
-		<div class = "form-group">
-			<label for = "apellidoPaterno">Apellido Paterno</label>
-			<input type="text" class="form-control" name="apellidoPaterno" id="apellidoPaterno" value="${repartidor.apellidoPaterno}" >
-		</div>		
-				
-		<div class = "form-group">
-			<label for = "apellidoMaterno" >Apellido Materno</label>
-			<input type="text" class="form-control" id = "apellidoMaterno" name="apellidoMaterno" value="${repartidor.apellidoMaterno}">
-		</div>
-		
-		<div class = "form-group">
-				<label>Correo electrónico</label>
-				<input type="text" class="form-control " name="correoElectronico" value="${repartidor.correoElectronico}" >
+		<div class=" text-center form schedule-assessment col-sm-6 col-md-6 col-lg-6 offset-sm-3 offset-md-3 offset-lg-3" ">
+			<div class = "form-group ">
+				<label for = "nombre">Nombre</label>
+				<input type="text" class="form-control"  id = "nombre" name="nombre" value="${repartidor.nombre}" >
 			</div>
-		
-	
-		<input id=idPersona name="idPersona" type = "hidden" value="${repartidor.idPersona}">
-
+				
+			<div class = "form-group">
+				<label for = "apellidoPaterno">Apellido Paterno</label>
+				<input type="text" class="form-control" name="apellidoPaterno" id="apellidoPaterno" value="${repartidor.apellidoPaterno}" >
+			</div>		
+					
+			<div class = "form-group">
+				<label for = "apellidoMaterno" >Apellido Materno</label>
+				<input type="text" class="form-control" id = "apellidoMaterno" name="apellidoMaterno" value="${repartidor.apellidoMaterno}">
+			</div>
+			
+			<div class = "form-group">
+					<label>Correo electrónico</label>
+					<input type="text" class="form-control " name="correoElectronico" value="${repartidor.correoElectronico}" >
+			</div>
+			<input id=idPersona name="idPersona" type = "hidden" value="${repartidor.idPersona}">
 			<div class = "text-center">
-			<button type="submit"  name = "registrar" class="btn btn-primary">Guardar</button>
+				<button type="submit"  name = "registrar" class="btn btn-primary">Guardar</button>
 			</div>
-			<div class = "text-right">
-				
-			</div>
-			
+		</div>
 	</form>
+		<footer class="page-footer font-small  pt-1 footer fixed-bottom">
 		
+		  <!-- Footer Elements -->
+		
+		  <!-- Copyright -->
+		  <div class="footer-copyright text-center py-2">2020 Copyright:
+		    <a href="#"> 
+		  	  Eff;cient organization
+		  	  <img class="icon" src="${pageContext.request.contextPath}/Icons/Logo.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
+		    </a>
+		  </div>
+		  <!-- Copyright -->
+		
+	</footer>
 		
 	</body>
 

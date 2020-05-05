@@ -62,6 +62,10 @@ public class Repartidor extends Persona {
         this.setPassword(password);
 	}
 	
+	public Boolean equals(Repartidor repartidor) {
+		return this.idRepartidor == repartidor.idRepartidor;
+	}
+	
 	public String toString() {
 		String string = "---------------------------------------------------------------------\n";
 		string += "| " + this.getIdPersona() + "| " + this.getNombre() +"| " +  this.getApellidoPaterno() +"| " + this.getApellidoMaterno() +"| "  + this.getCorreoElectronico() +"| " + idRepartidor+"| " + this.getPassword()+ "|\n "  ;
