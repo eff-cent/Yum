@@ -7,7 +7,7 @@
 <title>Registro</title>
 </head>
 <body>
-	<form action = "LoginRegister">
+	<form method="post" action="enter.jsp">
 		<table 
 			style="background-color: skyblue; margin-left: 20px;margin-left: 20px;">
 			<tr>
@@ -49,12 +49,14 @@
 				<td><input type="text" name="dirección"></td>
 			</tr>
 			
-			<tr>
-				<td><input type="submit" name="submit" value="Register"></td>
-				<td></td>
-			</tr>
-			
-			
+                    <tr>                    
+                        <td><input type="submit" value="Confirmar" /></td>
+                        <td><input type="reset" value="Borrar" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">¿Ya estás registrado? <a href="login.jsp">Ingresa aquí</a></td>
+                    </tr>
+						
 		</table>
 	</form>
 </body>
