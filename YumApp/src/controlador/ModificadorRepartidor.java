@@ -126,7 +126,7 @@ public class ModificadorRepartidor extends HttpServlet {
 				repartidorDAO.insertar(repartidor);
 				mostrar(request,response);
 			}
-			//repartidorDAO.enviarRegistroRepartidor(repartidor); 
+			repartidorDAO.enviarRegistroRepartidor(repartidor); 
 		
 			
 		}
