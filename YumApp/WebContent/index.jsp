@@ -25,5 +25,6 @@
 
 <a class = "btn btn-primary" href="modificadorRepartidor?action=registrarRepartidor">Registrar Articulos</a>
 <a class = "btn btn-primary" href="modificadorRepartidor?action=mostrar">Mostrar Articulos</a>
+<a class = "btn btn-primary" href="modificadorOrden?action=mostrar">Mostrar Articulos</a>
 </body>
 </html>

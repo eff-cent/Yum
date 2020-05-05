@@ -113,11 +113,18 @@ public class ModificadorRepartidor extends HttpServlet {
 		}
 		
 		private void registrar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		/*	Boolean existe = repartidorDAO.validarCorreoElectronico(request.getParameter("correoElectronico"));
+			request.setAttribute("checkResult", existe);
+			if(existe) {
+				
+			}else {*/
+				
 			Repartidor repartidor = new Repartidor(request.getParameter("nombre"), request.getParameter("apellidoPaterno"), request.getParameter("apellidoMaterno"),request.getParameter("correoElectronico"));
+			repartidor.generarPassword();
 			repartidorDAO.insertar(repartidor);
+			//repartidorDAO.enviarRegistroRepartidor(repartidor); 
+		//	}
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/RegistroRepartidorIH.jsp");
-			dispatcher.forward(request, response);
 		}
 		
 		private void nuevo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -130,6 +137,7 @@ public class ModificadorRepartidor extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/RepartidorAdminIH.jsp");
 			List<Repartidor> repartidores= repartidorDAO.listarRepartidores();
 			request.setAttribute("lista", repartidores);
+			System.out.println("f"); 
 			dispatcher.forward(request, response);
 		}	
 		
@@ -146,12 +154,24 @@ public class ModificadorRepartidor extends HttpServlet {
 		
 		
 		private void editar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+			int idPersona = Integer.parseInt(request.getParameter("idPersona"));
+			Repartidor repartidor = repartidorDAO.obtenerPorId(idPersona);
+			repartidor.setNombre(request.getParameter("nombre"));
+			repartidor.setApellidoPaterno(request.getParameter("apellidoPaterno"));
+			repartidor.setApellidoMaterno(request.getParameter("apellidoMaterno"));
+			repartidor.setCorreoElectronico(request.getParameter("correoElectronico"));
+			repartidorDAO.actualizar(repartidor);
+			mostrar(request,response);
+			/*
 			Repartidor repartidor = new Repartidor(request.getParameter("nombre"), request.getParameter("apellidoPaterno"), request.getParameter("apellidoMaterno"), request.getParameter("correoElectronico"));
 			int idPersona = Integer.parseInt(request.getParameter("idPersona"));
+			String password = request.getParameter("password");
 			repartidor.setIdRepartidor(idPersona);
 			repartidor.setIdPersona(idPersona);
+			repartidor.setPassword(password);
+			System.out.println(repartidor.toString());
 			repartidorDAO.actualizar(repartidor);
-			mostrar(request, response);
+			mostrar(request, response);*/
 		}
 		
 		private void eliminar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
@@ -161,6 +181,8 @@ public class ModificadorRepartidor extends HttpServlet {
 			mostrar(request, response);
 			
 		}
+		
+	
 		
 		
 	

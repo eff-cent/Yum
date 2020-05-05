@@ -6,6 +6,7 @@ public class Persona {
   private String apellidoPaterno;
   private String apellidoMaterno;
   private String correoElectronico;
+  private String password;
 
 	
 
@@ -26,6 +27,7 @@ public class Persona {
 		this.apellidoPaterno = apellidoPaterno;
 		this.apellidoMaterno = apellidoMaterno;
 		this.correoElectronico = correoElectronico;
+		
 	}
 
 	
@@ -110,4 +112,21 @@ public class Persona {
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
 	}
+	
+	/**
+	 * Sets new value of password
+	 * @param password
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	/**
+	 * Returns value of password
+	 * @return password
+	 */
+	public String getPassword() {
+		return this.password;
+	}
 }
+

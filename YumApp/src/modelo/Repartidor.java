@@ -1,5 +1,5 @@
 package modelo;
-
+import java.util.Random;
 public class Repartidor extends Persona {
 	private int idRepartidor;
 
@@ -35,10 +35,37 @@ public class Repartidor extends Persona {
 		this.idRepartidor = idRepartidor;
 	}
 	
+	/**
+	 * Genera y asigna una contraseña automática al repartidor
+	 */
+	
+	public void generarPassword() {
+        String charsCaps = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String chars = "abcdefghijklmnopqrstuvwxyz";
+        String nums = "0123456789";
+        String symbols = "!@#$%^&*_=+-/€.?<>)";
+
+        String passSymbols = charsCaps + chars + nums + symbols;
+        Random rnd = new Random();
+        
+        char[] passwordGenerada = new char[10];
+        String password = "";
+       
+        for (int i = 0; i < 10; i++) 
+        {
+            passwordGenerada[i] = passSymbols.charAt(rnd.nextInt(passSymbols.length()));
+            password += passwordGenerada[i];
+            
+            
+        }
+        
+        this.setPassword(password);
+	}
+	
 	public String toString() {
-		String string = "-------------------------------------------------------------------------\n";
-		string += "| " + this.getIdPersona() + "| " + this.getNombre() +"| " +  this.getApellidoPaterno() +"| " + this.getApellidoMaterno() +"| " + this.getCorreoElectronico() +"| " + idRepartidor+"|\n "  ;
-		 string += "-------------------------------------------------------------------------\n";
+		String string = "---------------------------------------------------------------------\n";
+		string += "| " + this.getIdPersona() + "| " + this.getNombre() +"| " +  this.getApellidoPaterno() +"| " + this.getApellidoMaterno() +"| "  + this.getCorreoElectronico() +"| " + idRepartidor+"| " + this.getPassword()+ "|\n "  ;
+		 string += "---------------------------------------------------------------------\n";
 		return string;
 	}
 }

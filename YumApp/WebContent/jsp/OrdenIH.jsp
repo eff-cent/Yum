@@ -74,10 +74,13 @@
 		 <thead class="thead-dark">
 		<tr>
 			
-		  <th class="text-center" scope = "col" > Nombre</th>
-		<th  class="text-center" scope = "col" >Apellido Paterno</th>
-		 <th  class="text-center" scope = "col" >Apellido Materno</th>
-		 <th  class="text-center" scope = "col" >Correo electrónico</th>
+		  <th class="text-center" scope = "col" > idOrden</th>
+		<th  class="text-center" scope = "col" >fecha</th>
+		 <th  class="text-center" scope = "col" >estado</th>
+		 <th  class="text-center" scope = "col" >calificacion</th>
+		 <th  class="text-center" scope = "col" >idCliente</th>
+		 <th  class="text-center" scope = "col" >idCarrito</th>
+		 <th  class="text-center" scope = "col" >idRepartidor</th>
 		 <th class="text-center" scope = "col"/>
 		 
 		</tr>
@@ -85,35 +88,23 @@
 	
 		<tbody>
 	
-		<c:forEach var="repartidor" items="${lista}">
+		<c:forEach var="orden" items="${lista}">
 		<tr>
-				<td><c:out value="${repartidor.nombre}"/></td>
-				<td><c:out value="${repartidor.apellidoPaterno}"/></td>
-				<td><c:out value="${repartidor.apellidoMaterno}"/></td>
-				<td><c:out value="${repartidor.correoElectronico}"/></td>
+				<td><c:out value="${orden.idOrden}"/></td>
+				<td><c:out value="${orden.fecha}"/></td>
+				<td><c:out value="${orden.estado}"/></td>
+				<td><c:out value="${orden.calificacion}"/></td>
+				<td><c:out value="${orden.idCliente}"/></td>
+				<td><c:out value="${orden.idCarrito}"/></td>
+				
+				<td><c:out value="${orden.idRepartidor}"/></td>
 				<td>
 				<div class="col-2">
-				<a class = "btn btn-primary" href="modificadorRepartidor?action=showedit&idPersona=<c:out value="${repartidor.idPersona}" />">Editar</a>
+			
 				<img src="${pageContext.request.contextPath}/Icons/editar.svg" width="30" height="30" class="ml-3" alt="">
-				<button type="button" class="btn btn-danger " data-toggle="modal" data-target="#modalBorrar">Eliminar</button>
+				
 				<img src="${pageContext.request.contextPath}/Icons/borrar.svg" width="30" height="30" class="ml-3" alt="">
-<!-- Modal -->
-<div id="modalBorrar" class="modal fade" role="dialog">
-  <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Borrar repartidor </h4>
-      </div>
-      <div class="modal-body">
-        <p>¿Estás seguro de que quieres eliminar al repartidor <b> ${repartidor.nombre} ${repartidor.apellidoPaterno} ${repartidor.apellidoMaterno }</b>? No podrás recuperar sus datos.</p>
-      </div>
-      <div class = "modal-footer">
-      	<a class = "btn btn-danger" href="modificadorRepartidor?action=eliminar&idPersona=<c:out value="${repartidor.idPersona}" />">Borrar</a>
-     <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-  </div>
-</div>
 				
 				
 				</div>
