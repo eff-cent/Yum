@@ -45,10 +45,30 @@
 			</tr>
 			
 			<tr>
-				<td>Dirección:</td>
-				<td><input type="text" name="dirección"></td>
+				<td>Delegación:</td>
+				<td><input type="text" name="delegacion"></td>
+			</tr>
+
+			<tr>
+				<td>Colonia:</td>
+				<td><input type="text" name="colonia"></td>
+			</tr>			
+			
+			<tr>
+				<td>Calle:</td>
+				<td><input type="text" name="calle"></td>
 			</tr>
 			
+			<tr>
+				<td># interior:</td>
+				<td><input type="text" name="numInterior"></td>
+			</tr>
+
+			<tr>
+				<td># exterior:</td>
+				<td><input type="text" name="numExterior"></td>
+			</tr>						
+						
                     <tr>                    
                         <td><input type="submit" value="Confirmar" /></td>
                         <td><input type="reset" value="Borrar" /></td>
