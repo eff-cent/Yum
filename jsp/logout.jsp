@@ -1,5 +1,5 @@
 <%
 session.setAttribute("correoElectronico", null);
 session.invalidate();
-response.sendRedirect("login.jsp");
+response.sendRedirect("/jsp/login.jsp");
 %>
