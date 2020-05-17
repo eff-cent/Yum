@@ -47,11 +47,11 @@ No se ha podido iniciar sesión<br/>
 				      <a class="nav-item nav-link" href="#" id="nav-select">Órdenes</a>
 				      <a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
 				      <a class="nav-item nav-link" href="#" >Alimentos</a>
-				      <a class="nav-item nav-link" href="#">Repartidores</a>
+				      <a class="nav-item nav-link" id="nav-select" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			      </div>
 		      </div>
 			<div class="navbar-brand" id="cerrar-sesion">
-				<a class="nav-item" href="./../logout.jsp">Cerrar Sesión</a>
+				<a class="nav-item" href="./../crud-menu/logout.jsp">Cerrar Sesión</a>
 				<img src="C:/Users/Alma/eclipse-workspace/crud-menu/WebContent/Icons/cerrar-sesion.svg" width="30" height="40" class="ml-3" alt="">
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="	Toggle navigation">
   				<span class="navbar-toggler-icon"></span>

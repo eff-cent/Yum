@@ -25,7 +25,7 @@
     
     //Conexión
     Class.forName("com.mysql.jdbc.Driver");
-    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yum_db", "root", "Mdfnll#04a");
+    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yum_db", "root", "Furianocturna.");
     
     PreparedStatement clienteStatement = con.prepareStatement(sqlCliente);
     clienteStatement.setString(1, correo); 
