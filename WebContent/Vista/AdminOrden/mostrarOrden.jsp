@@ -45,43 +45,9 @@
 	
 	<!--  Título de la tabla -->
 	<div class="container">
-		<h1 class="display-4 text-center title mb-2 mt-2">Orden #${ordenId}</h1>
+		<h1 class="display-4 text-center title mb-2 mt-2">Orden {ordenId}</h1>
 	</div>
 	
-	<!--  Tabla con la información de la órden. -->
-	<div class="container w-50">
-		<table class="table text-center">
-	  	<thead class="thead-dark">
-		    <tr>
-		      <th scope="col" style="width: 70%">Alimento</th>
-		      <th scope="col" style="width: 15%">Cantidad</th>
-		      <th scope="col" style="width: 15%">Precio</th>
-		    </tr>
-		  </thead>
-			<c:forEach var="alimento" items="${listaAlimentos}">
-				<tr>
-			 		<td>${alimento.getNombre()}</td>
-					<td>${alimento.getCantidad()}</td>
-					<td>${alimento.getPrecio()}</td>
-				</tr>
-			</c:forEach>
-				<tr class="table-success">
-					<td></td>
-	   		  		<td colspan="2" class="text-center">Total: $${total}</td>
-				</tr>
-		  <tbody>
-		  </tbody>
-		</table>
-		
-		<div class="container px-0">
-			<!-- Herramienta para regresar a órdenes -->
-			<div class="container">
-				<div class="row justify-content-end">
-					<h5><a href="adminOrden?action=mostrarOrdenes" class="btn btn-secondary">Regresar</a></h5>
-				</div>
-			</div>
-		</div>
-	</div>
 	
 		<!-- Footer -->
 	<footer class="page-footer font-small  pt-1">

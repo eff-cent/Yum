@@ -36,7 +36,7 @@
 }
 </style>
 <meta charset="ISO-8859-1">
-<title>Editar perfil</title>
+<title>Órdenes actuales</title>
 <!-- Icono del título de la página -->
 <link rel="icon"
 	href="${pageContext.request.contextPath}/Icons/Logo.svg"
@@ -68,6 +68,7 @@
 					src="${pageContext.request.contextPath}/Icons/orden.svg" width="30"
 					height="30" class="d-inline-block align-top mr-2" alt=""></li>
 				<li class="nav-item"><a class="nav-link mr-3" href="modificadorCliente?action=mostrarOrdenesActuales">Órdenes</a>
+						<span class="sr-only">(current)</span>
 				</li>
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/carro.svg" width="30"
@@ -89,94 +90,51 @@
 	</nav>
 
 	<div class="container">
-		<h1 class="text-center title">Modifica tu perfil,
-			${cliente.getNombre()}</h1>
+		<h1 class="text-center title">Tus órdenes</h1>
 	</div>
-	<div class="container">
-		<div class="row">
-			<div
-				class="col-sm-3 col-md-3 col-lg-3 offset-sm-9 offset-md-9 offset-lg-9">
-				<div class="accordion">
-					<div class="card">
-
-						<button type="button" class="btn btn-outline-info"
-							onclick="window.location.href='modificadorCliente?action=mostrarDirecciones';">
-							Editar direcciones <img class="icon"
-								src="${pageContext.request.contextPath}/Icons/editar.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="30"
-								height="30">
-						</button>
-
+	
+	
+	<div class="container final">
+		<div class="container pb-2">
+				<div class="row justify-content-end">
+					<div class="col-sm-auto px-2">
+						<h5><a href="modificadorCliente?action=mostrarHistorialOrdenes" class="badge badge-secondary">Ver historial de órdenes</a></h5>
 					</div>
 				</div>
-			</div>
 		</div>
+		
+	<table class="table mx-auto text-center table-striped table-bordered" id="tablaOrdenes">
+		<thead class="thead-dark">
+			<th class="text-center" scope="col">Acción</th>
+				<th class="text-center" scope="col">Fecha</th>
+				<th class="text-center" scope="col">Estado</th>
+				 <th class="text-center" scope="col">Repartidor</th>
+				 
+		</thead>
+		
+		<tbody>
+			<c:forEach var="orden" items="${ordenesActuales}">
+				<tr>
+				<td><a class="btn btn-primary"  href="modificadorCliente?action=verOrden&idOrden=${orden.getId()}">
+					Ver orden</a></td>
+					<td><c:out value="${orden.fecha}" /></td>
+					<td><c:out value="${orden.getNombreEstado()}" /></td>
+					<td ><c:out value="${orden.repartidor}" /></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+		
+	</table>
+		
+			
+		
 	</div>
-	<div class="container final">
-		<div class="row">
-			<div
-				class="col-sm-6 col-md-6 col-lg-6  offset-sm-3 offset-md-3 offset-lg-3">
-				<form
-					action="modificadorCliente?action=editarCliente"
-					method="post" class="final">
-					<table class="table w-55 mx-auto lg-8">
-
-						<tr>
-							<td>Nombre:</td>
-							<td><input type="text" name="nombre" required
-								placeholder="Nombre"
-								value="<c:out value="${cliente.getNombre()}"></c:out>"
-								class="form-control"></td>
-						</tr>
-
-						<tr>
-							<td>Apellido Paterno:</td>
-							<td><input type="text" name="apePat" required
-								placeholder="Apellido paterno"
-								value="<c:out value="${cliente.getApellidoPaterno()}"></c:out>"
-								class="form-control"></td>
-						</tr>
-
-						<tr>
-							<td>Apellido Materno:</td>
-							<td><input type="text" name="apeMat" required
-								placeholder="Apellido materno"
-								value="<c:out value="${cliente.getApellidoMaterno()}"></c:out>"
-								class="form-control"></td>
-						</tr>
-
-						<tr>
-							<td>Correo electrónico:</td>
-							<td><input type="text" name="email" required
-								placeholder="Correo electrónico"
-								value="<c:out value="${cliente.getCorreoElectronico()}"></c:out>"
-								class="form-control" disabled></td>
-						</tr>
-
-						<tr>
-							<td>Contraseña:</td>
-							<td><input type="password" name="password" required
-								placeholder="Contraseña"
-								value="<c:out value="${cliente.getPassword()}"></c:out>"
-								class="form-control"></td>
-						</tr>
-
-						<tr>
-							<td>Teléfono:</td>
-							<td><input type="text" name="telefono" required
-								placeholder="Teléfono"
-								value="<c:out value="${cliente.getTelefono()}"></c:out>"
-								class="form-control"></td>
-						</tr>
-						<tr>
-							<td><input type="submit" name="submit" value="Guadar"></td>
-							<td></td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
-	</div>
+	
+	
+	
+	
+	
+	
 	<!-- Footer -->
 	<footer class="page-footer font-small  pt-1 footer fixed-bottom footer">
 

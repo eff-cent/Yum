@@ -11,12 +11,12 @@
 	</context-param>
 	<context-param>
 		<param-name>jdbcPassword</param-name>
-		<param-value>koko13</param-value>
+		<param-value>Furianocturna.</param-value>
 	</context-param>
 	<context-param>
   		<!-- Ruta absoluta para almacenar las imágenes de los alimentos.
   		(Cambiar si es necesario) -->
   		<param-name>imagenesAlimentos</param-name>
-  		<param-value>C:\Users\Jorge Cortés\Documents\imagenes</param-value>
+  		<param-value>C:\Users\lnata\Pictures</param-value>
  	</context-param>
 </web-app>

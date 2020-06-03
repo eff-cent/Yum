@@ -11,7 +11,7 @@
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 		crossorigin="anonymous">
 	
-	<!-- Style CSS para lo demás -->
+	<!-- Style CSS para lo demï¿½s -->
 	<link rel="stylesheet" type="text/css"
 		href="${pageContext.request.contextPath}/CSS/style.css">
 	<style type="text/css">
@@ -24,7 +24,7 @@
 	}
 	</style>
 	<title>Repartidor</title>
-	<!-- Icono del título de la página -->
+	<!-- Icono del tï¿½tulo de la pï¿½gina -->
 	<link rel="icon"
 		href="${pageContext.request.contextPath}/Icons/admin-icon.svg"
 		type="image/x-icon">
@@ -32,25 +32,25 @@
 </head>
 
 <body>
-	<!-- Barra de navegación -->
+	<!-- Barra de navegaciï¿½n -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 		id="top-bar">
 		<div class="navbar-brand">
 			<img src="${pageContext.request.contextPath}/Icons/admin.svg"
 				width="30" height="30" class="" alt=""> <a
-				class="navbar-brand text-white">Administración Yum</a>
+				class="navbar-brand text-white">Administraciï¿½n Yum</a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
-				<a class="nav-item nav-link" href="adminOrden?action=mostrarOrdenes">Órdenes</a> 
+				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">MenÃº</a>
+				<a class="nav-item nav-link" href="adminOrden?action=mostrarOrdenes">Ã“rdenes</a> 
 				<a class="nav-item nav-link" href="adminAlimento">Alimentos</a> 
 				<a class="nav-item nav-link active" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			</div>
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
 			<a class="nav-item" href="logout?">Cerrar
-				Sesión</a> <img
+				Sesiï¿½n</a> <img
 				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
 				width="30" height="30" class="ml-3" alt="">
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -105,7 +105,7 @@
 				<th class="text-center" scope="col">Nombre</th>
 				<th class="text-center" scope="col">Apellido Paterno</th>
 				<th class="text-center" scope="col">Apellido Materno</th>
-				<th class="text-center" scope="col">Correo electrónico</th>
+				<th class="text-center" scope="col">Correo electrï¿½nico</th>
 				<th class="text-center" scope="col">Acciones</th>
 
 			</tr>

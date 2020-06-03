@@ -16,8 +16,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import dao.ClienteDAO;
+import dao.OrdenDAO;
+import modelo.AlimentoOrden;
 import modelo.Cliente;
 import modelo.Direccion;
+import modelo.OrdenAdmin;
 /**
  * Servlet implementation class ModificadorCliente
  */
@@ -26,13 +29,13 @@ public class ModificadorCliente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	ClienteDAO clienteDAO;
-	
+	OrdenDAO ordenDAO;
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
 		String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
 		String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 		try {
-
+			ordenDAO = new OrdenDAO(jdbcURL, jdbcUsername, jdbcPassword);
 			clienteDAO = new ClienteDAO(jdbcURL, jdbcUsername, jdbcPassword);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -82,6 +85,13 @@ public class ModificadorCliente extends HttpServlet {
 			case "eliminarDireccion": 
 				eliminarDireccionCliente(request, response);
 				break;	
+			case "mostrarOrdenesActuales":
+				mostrarOrdenesActuales(request, response);
+				
+			case "verOrden":
+				verOrden(request, response);
+			case "mostrarHistorialOrdenes":
+				mostrarHistorialOrdenes(request,response);
 			default: 
 				break;
 			}
@@ -313,5 +323,66 @@ public class ModificadorCliente extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 	}
+	
+	private void mostrarOrdenesActuales(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		HttpSession session = request.getSession(false); 
+		if(session!= null) {
+			
+			Cliente clienteUno =(Cliente)session.getAttribute("cliente");
+			
+			int idCliente = clienteUno.getIdCliente();
+			System.out.println(idCliente + clienteUno.getApellidoPaterno());
+			List<OrdenAdmin> ordenesActuales = ordenDAO.getOrdenesCliente(idCliente);
+			request.setAttribute("ordenesActuales", ordenesActuales);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/ClienteOdrenIH.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			request.getRequestDispatcher("index.jsp").include(request, response);
+		}
+	}
+	
+	private void verOrden(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		HttpSession session = request.getSession(false); 
+		if(session!= null) {
+			int idOrden = Integer.parseInt(request.getParameter("idOrden"));
+			
+			
+			List<AlimentoOrden> listaAlimentos = ordenDAO.obtenAlimentosOrden(idOrden);
+			System.out.println("obtengo Alimentos de orden con id: " + idOrden);
+			
+			//Obtenemos la suma total de costos.
+			int total = ordenDAO.totalOrden(idOrden);
+			
+			//Mandamos al jsp.
+			request.setAttribute("listaAlimentos", listaAlimentos);
+			//El id de la órden
+			request.setAttribute("ordenId", idOrden);
+			//Total de la órden.
+			request.setAttribute("total", total);
+			request.getRequestDispatcher("/Vista/Cliente/MostrarOrdenCliente.jsp").forward(request, response);
+			
+		}else {
+			request.getRequestDispatcher("index.jsp").include(request, response);
+		}
+	}
+	
+	
+	private void mostrarHistorialOrdenes(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		HttpSession session = request.getSession(false); 
+		if(session!= null) {
+			
+			Cliente clienteUno =(Cliente)session.getAttribute("cliente");
+			
+			int idCliente = clienteUno.getIdCliente();
+			System.out.println(idCliente + clienteUno.getApellidoPaterno());
+			List<OrdenAdmin> ordenes = ordenDAO.getHistorialOrdenCliente(idCliente);
+			request.setAttribute("ordenes", ordenes);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/ClienteHistorialOrdenIH.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			request.getRequestDispatcher("index.jsp").include(request, response);
+		}
+	}
+	
 
 }
