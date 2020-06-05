@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Conexion;
-import modelo.OrdenRepartidor;
+import modelo.AlimentoCarrito;
+import modelo.Carrito;
 
 public class CarritoDAO {
 	private Conexion con;
@@ -19,29 +21,27 @@ public class CarritoDAO {
 	}
 	
 	/*
-	* Obtiene las �rdenes que ya est�n listas para el repartidor.
+	* Obtiene los alimentos que están en el carrito.
 	*/
-	public List<OrdenRepartidor> getOrdenesListas() throws SQLException {
+	public List<AlimentoCarrito> getAlimentos() throws SQLException {
 		ResultSet res = null;
 		
-		// La lista que contiene las ordenes.
-		List<OrdenRepartidor> listaOrdenes = new ArrayList<OrdenRepartidor>();
+		// La lista que contiene los alimentos en el carrito.
+		List<AlimentoCarrito> listaAlimentos = new ArrayList<AlimentoCarrito>();
 		
-		String consultaOrdenes = "SELECT o.idOrden,p.nombre nombrecliente, calle, delegacion, colonia, num_interior, num_exterior\r\n" + 
-				"FROM orden o INNER JOIN direccionescliente d\r\n" + 
-				"ON o.idDireccionCliente = d.idDireccionCliente\r\n" + 
-				"INNER JOIN direccion dc\r\n" + 
-				"ON d.idDireccion = dc.idDireccion\r\n" + 
-				"INNER JOIN cliente c \r\n" + 
-				"ON c.idCliente = o.idCliente\r\n" + 
-				"INNER JOIN persona p\r\n" + 
-				"ON c.idPersona = p.idPersona \r\n" +
-				"WHERE o.estado = ?";
+		String consultaAlimentos = 	
+				"SELECT a.idAlimento, nombre, precio, path, cantidad\r\n"+
+				"FROM alimentoscarrito a\r\n"+
+				"INNER JOIN carrito c\r\n"+
+				"ON a.idCarrito = c.idCarrito\r\n"+
+				"INNER JOIN alimento al\r\n"+
+				"ON al.idAlimento = a.idAlimento\r\n"+
+				"WHERE a.idCarrito = ?";
 		
 		con.conectar();
 		connection = con.getJdbcConnection();
 		
-		PreparedStatement statement = connection.prepareStatement(consultaOrdenes);
+		PreparedStatement statement = connection.prepareStatement(consultaAlimentos);
 		
 		statement.setInt(1, 2);
 		
@@ -52,18 +52,100 @@ public class CarritoDAO {
 		}
 		
 		while(res.next()) {
-			int idOrden = res.getInt("idOrden");
-			int estado = res.getInt("estado");
-			String nombreCliente = res.getString("nombrecliente");
-			String direccion = res.getString("calle") + " " + res.getString("delegacion") + " " +
-					res.getString("colonia") + " " + Integer.toString(res.getInt("num_interior")) + " " 
-					+ Integer.toString(res.getInt("num_exterior"));
+			int id = res.getInt("idAlimento");
+			int cantidad = res.getInt("cantidad");
+			int precio = res.getInt("precio");
+			String nombre= res.getString("nombre");
+			String path = res.getString("path");
+			AlimentoCarrito alimentoCarrito = new AlimentoCarrito(id, nombre, cantidad, precio, path);
 			
-			OrdenRepartidor ordenRepartidor = new OrdenRepartidor(idOrden, estado, nombreCliente, direccion);
-			
-			listaOrdenes.add(ordenRepartidor);
+			listaAlimentos.add(alimentoCarrito);
 		}
 		
-		return listaOrdenes;
+		return listaAlimentos;
 	}
+	
+	/*
+	* Obtiene la suma total de los alimentos del carrito..
+	*/
+	public int totalCarrito(int idCarrito) throws SQLException {
+		int total = 0;
+		
+		// Consulta para obtener el total del carrito.
+		String consultaTotal = 
+				"SELECT SUM(precio * cantidad) total \r\n" +
+				"FROM carrito o inner join \r\n" +
+				"alimentoscarrito a  \r\n" +
+				"on o.idCarrito = a.idCarrito inner join\r\n" +
+				"alimento c on a.idAlimento = c.idAlimento\r\n" +
+				"where a.idCarrito = ?  \r\n" +
+				"group by a.idCarrito";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(consultaTotal);
+		
+		statement.setInt(1, idCarrito);
+		
+		ResultSet res = statement.executeQuery();
+		
+		// Obtenemos el resultado.
+		if(res.next()) {
+			total = res.getInt("total");
+			return total;
+		}
+		
+		statement.close();
+		con.desconectar();
+		
+		return total;
+	}
+	
+	//Editar cantidad
+		public boolean editarCantidad(AlimentoCarrito alimentoCarrito)throws SQLException {
+			boolean rowEditar = false; 
+			String sql = "UPDATE alimentoscarrito SET cantidad = ? WHERE idAlimento = ? ";			
+			con.conectar();
+			connection = con.getJdbcConnection(); 
+			
+			PreparedStatement statement = connection.prepareStatement(sql); 
+			statement.setInt(1, alimentoCarrito.getCantidad());
+			statement.setInt(2, alimentoCarrito.getId());
+			 
+			rowEditar = statement.executeUpdate()> 0; 
+			statement.close();
+			con.desconectar();
+			
+			return rowEditar;
+		}
+		
+	//Eliminar alimento del carrito		
+		public boolean eliminarAlimentoCarrito(int idAlimento)throws SQLException{
+			boolean rowActualizar = false;
+			String sql = "DELETE FROM alimentoscarrito WHERE idAlimento = ? ";
+			con.conectar();
+			connection = con.getJdbcConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idAlimento);
+			rowActualizar = statement.executeUpdate()>0;
+			statement.close();
+			con.desconectar();
+			return rowActualizar;
+		}
+		
+	//Vaciar carrito
+		public boolean vaciarCarrito(int idCarrito)throws SQLException{
+			boolean rowActualizar = false;
+			String sql = "DELETE FROM alimentoscarrito WHERE idCarrito = ? ";
+			con.conectar();
+			connection = con.getJdbcConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idCarrito);
+			rowActualizar = statement.executeUpdate()>0;
+			statement.close();
+			con.desconectar();
+			return rowActualizar;
+		}
+	
 }

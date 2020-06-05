@@ -21,11 +21,12 @@ import dao.OrdenRepartidorDAO;
 import modelo.Cliente;
 import modelo.Direccion;
 import modelo.Carrito;
+import modelo.Categoria;
 import modelo.AlimentoCarrito;
 /**
  * Servlet implementation class ModificadorCliente
  */
-@WebServlet("/carrito")
+@WebServlet("/verCarrito")
 public class ModificadorCarrito extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -68,10 +69,14 @@ public class ModificadorCarrito extends HttpServlet {
 				verCarrito(request, response);
 				break;
 			case "vaciarCarrito": 
-				verCarrito(request, response);
+				vaciarCarrito(request, response);
+				break;
+			case "editarCarrito":
+				editarCarrito(request, response);
 				break;
 			case "confirmarOrden":
 				confirmarOrden(request, response);
+				break;
 			default: 
 				break;
 			}
@@ -88,6 +93,38 @@ public class ModificadorCarrito extends HttpServlet {
 		doGet(request, response);
 	}
 	
+	
+	
+	private void verCarrito(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/VerCarritoIH.jsp");
+		HttpSession session = request.getSession(false); 
+		if(session!= null) {
+			System.out.println(session.getAttribute("cliente"));
+			List<AlimentoCarrito> alimentos= null; 
+			alimentos = carritoDAO.getAlimentos(); 
+			if (alimentos == null) {
+				request.setAttribute("Mensaje", "No hay algun producto aún");
+				System.out.println("yeiii");
+			}
+			request.setAttribute("lista", alimentos);
+			dispatcher.forward(request,response);
+		}else {
+			PrintWriter out = response.getWriter();
+			out.print("Por favor ingresa primero"); 
+			request.getRequestDispatcher("index.jsp").include(request, response);
+			
+		}
+		
+	}
+	
+	private void vaciarCarrito(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		carritoDAO.vaciarCarrito(Integer.parseInt(request.getParameter("idCarrito")));
+		
+		verCarrito(request, response);
+	}
+	
+	
+	
 	/*
 	 * Obtiene las �rdenes con estado 1, 2 y 3 para que el administrador
 	 * las vea.
@@ -95,13 +132,13 @@ public class ModificadorCarrito extends HttpServlet {
 	private void confirmarOrden(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
 		// Obtenemos las �rdenes en estado 2 (Sin repartidor asignado).
 		//List<OrdenRepartidor> ordenesListas = ordenRepartidorDAO.getOrdenesListas();
-		System.out.println("oconfirmoOrden");
+		System.out.println("confirmo la orden");
 		
 		//Mandamos las �rdenes al jsp.
 		//request.setAttribute("ordenesListas", ordenesListas);
 		
 		//Mostramos vista.
-		request.getRequestDispatcher("/Vista/Repartidor/ConfirmarPedidoIH.jsp").forward(request, response);
+		request.getRequestDispatcher("/Vista/Cliente/ConfirmarPedidoIH.jsp").forward(request, response);
 	}
 
 }

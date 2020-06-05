@@ -72,7 +72,7 @@
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/carro.svg" width="30"
 					height="30" class="d-inline-block align-top mr-2" alt=""></li>
-				<li class="nav-item mr-3"><a class="nav-link" href="#">Carrito</a>
+				<li class="nav-item mr-3"><a class="nav-link" href="modificadorCarrito?action=verCarrito">Carrito</a>
 				</li>
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/orden.svg" width="30"

@@ -5,16 +5,22 @@ package modelo;
  * un alimento con información necesaria para el cliente.
  */
 public class AlimentoCarrito {
+	int idAlimento;
 	String nombre;
 	int cantidad;
 	double precio;
 	String path;
 	
-	public AlimentoCarrito(String nombre, int cantidad, double precio, String path) {
+	public AlimentoCarrito(int idAlimento, String nombre, int cantidad, double precio, String path) {
+		this.idAlimento = idAlimento;
 		this.nombre = nombre;
 		this.cantidad = cantidad;
 		this.precio = precio;
 		this.path = path;
+	}
+	
+	public int getId() {
+		return idAlimento;
 	}
 	
 	public String getNombre() {

@@ -6,12 +6,14 @@ public class Carrito {
 
 	int idCarrito;	
 	String cliente;
-	List<AlimentoCarrito> alimentos;	int total;
+	List<AlimentoCarrito> alimentos;	
+	int total;
 	
-	public Carrito(int idCarrito, String cliente, List<AlimentoCarrito> alimentos) {
+	public Carrito(int idCarrito, String cliente, List<AlimentoCarrito> alimentos, int total) {
 		this.idCarrito = idCarrito;
 		this.cliente = cliente;
 		this.alimentos = alimentos;
+		this.total = total;
 	}
 	
 	public int getId() {
@@ -27,14 +29,7 @@ public class Carrito {
 		return alimentos;
 	}
 
-	public float calcularTotal() {
-    	if(this.alimentos.isEmpty()) return 0;
-    	float total = 0f;
-        AlimentoCarrito a;
-    	for(int i = 0; i< this.alimentos.size(); ++i) {
-            a = this.alimentos.get(i);
-    		total += a.getPrecio()*a.getCantidad();
-    	}
+	public int getTotal() {
         return total;
     }
 }
